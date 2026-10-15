@@ -44,7 +44,8 @@ Input classes the spec implies but doesn't spell out, most likely to bite first.
 ### Task 1: Project skeleton, config, models, test fakes
 
 **Files:**
-- Create: `.gitignore`, `requirements.txt`, `.env.example`, `pytest.ini`
+- Already present (committed by the reviewer): `.gitignore`. A local `.env` also already exists and is ignored.
+- Create: `requirements.txt`, `.env.example`, `pytest.ini`
 - Create: `scraper/__init__.py`, `scraper/config.py`, `scraper/models.py`
 - Create: `tests/__init__.py`, `tests/fakes.py`, `tests/fixtures/` (directory)
 - Test: `tests/test_models.py`
@@ -69,7 +70,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-`.gitignore`:
+`.gitignore` already exists with this content. Check it, don't recreate it:
 ```
 .env
 .venv/
@@ -347,7 +348,7 @@ Expected: 9 passed
 - [ ] **Step 8: Commit**
 
 ```bash
-git add .gitignore requirements.txt .env.example pytest.ini scraper/__init__.py scraper/config.py scraper/models.py tests/__init__.py tests/fakes.py tests/test_models.py
+git add requirements.txt .env.example pytest.ini scraper/__init__.py scraper/config.py scraper/models.py tests/__init__.py tests/fakes.py tests/test_models.py
 git commit -m "feat: project skeleton, config and data models"
 ```
 
@@ -1746,7 +1747,7 @@ git commit -m "feat: single-command entry point with exit codes"
 - Consumes: the whole package.
 - Produces: the committed outputs and README the reviewer checks.
 
-- [ ] **Step 1: Make sure `.env` exists with a real key.** Ask the human for the key if needed. Never commit `.env`, and never print the key.
+- [ ] **Step 1: Make sure `.env` has a real key.** `.env` already exists. The human fills in `GEMINI_API_KEY=` themselves. Check without printing the key: `grep -q '^GEMINI_API_KEY=.\+' .env && echo key-present || echo key-missing`. If it prints `key-missing`, stop and ask the human to add their key to `.env`; don't ask them to paste it into chat. Never commit `.env`, and never print the key.
 
 Run: `git check-ignore .env`
 Expected: `.env` (so it is ignored)
