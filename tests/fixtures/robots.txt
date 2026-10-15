@@ -1,0 +1,10 @@
+User-Agent: *
+Disallow: /modal/
+Disallow: /go/
+Disallow: /ca/modal/
+Disallow: /fi/modal/
+Disallow: /admin/
+Disallow: /ca/admin/
+Disallow: /fi/admin/
+Disallow: /api/*/ajax-load/toplist-first-item-footer/
+Sitemap: https://bojoko.com/sitemap.xml
