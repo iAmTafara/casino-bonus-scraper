@@ -1,5 +1,7 @@
 # Casino Bonus Scraper
 
+**Live page:** https://iamtafara.github.io/casino-bonus-scraper/
+
 Scrapes the welcome bonus for three online casinos from their review pages on
 [bojoko.com](https://bojoko.com), uses Google Gemini to turn the free-text bonus
 terms into structured fields, writes them to [`docs/bonuses.json`](docs/bonuses.json),
