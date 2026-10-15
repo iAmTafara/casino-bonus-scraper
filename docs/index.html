@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casino Welcome Bonuses</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #ffffff; --muted: #5c5c5c; --line: #dddddd; --accent: #0b5cad; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #ececec; --bg: #121212; --muted: #a8a8a8; --line: #333333; --accent: #7ab7ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 8px; }
+  p { margin: 0 0 12px; }
+  .muted, footer { color: var(--muted); }
+  a { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  caption { text-align: left; color: var(--muted); padding-bottom: 8px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+  th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  .note { border-left: 4px solid var(--line); padding: 8px 12px; }
+  footer { font-size: 0.875rem; margin-top: 24px; }
+  @media (max-width: 600px) {
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tr { border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; margin-bottom: 12px; }
+    td { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; text-align: right; }
+    td:last-child { border-bottom: 0; }
+    td::before { content: attr(data-label); font-weight: 600; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<h1>Casino Welcome Bonuses</h1>
+<p class="muted">Welcome offers for 3 casinos, extracted from their review pages on bojoko.com.</p>
+<table>
+<caption>Welcome bonus, wagering requirement and minimum deposit per casino</caption>
+<thead><tr><th scope="col">Casino</th><th scope="col">Welcome bonus</th><th scope="col">Wagering</th><th scope="col">Min deposit</th><th scope="col">Source</th></tr></thead>
+<tbody>
+<tr><td data-label="Casino">10Bet</td><td data-label="Welcome bonus">100% up to £25</td><td data-label="Wagering">10x</td><td data-label="Min deposit">£10</td><td data-label="Source"><a href="https://bojoko.com/casino/review/10bet/" rel="nofollow noopener" target="_blank">bojoko.com</a></td></tr>
+<tr><td data-label="Casino">Mr Vegas</td><td data-label="Welcome bonus">100% up to £50 + 11 bonus spins</td><td data-label="Wagering">10x</td><td data-label="Min deposit">£10</td><td data-label="Source"><a href="https://bojoko.com/casino/review/mr-vegas/" rel="nofollow noopener" target="_blank">bojoko.com</a></td></tr>
+<tr><td data-label="Casino">Betway</td><td data-label="Welcome bonus">150 bonus spins</td><td data-label="Wagering">None</td><td data-label="Min deposit">£10</td><td data-label="Source"><a href="https://bojoko.com/casino/review/betway/" rel="nofollow noopener" target="_blank">bojoko.com</a></td></tr>
+</tbody>
+</table>
+
+<footer>
+<p>Data scraped from bojoko.com on 15 October 2026, 07:44 UTC using gemini-flash-latest.</p>
+<p>18+ · Gamble responsibly · <a href="https://www.begambleaware.org/" rel="nofollow noopener" target="_blank">BeGambleAware.org</a></p>
+</footer>
+</main>
+</body>
+</html>

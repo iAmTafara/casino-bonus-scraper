@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-10-15T07:44:59Z",
+  "source": "https://bojoko.com",
+  "model": "gemini-flash-latest",
+  "casinos": [
+    {
+      "casino": "10Bet",
+      "welcome_bonus": "100% up to £25",
+      "wagering_requirement": 10,
+      "minimum_deposit": {
+        "amount": 10,
+        "currency": "GBP"
+      },
+      "source_url": "https://bojoko.com/casino/review/10bet/",
+      "warnings": []
+    },
+    {
+      "casino": "Mr Vegas",
+      "welcome_bonus": "100% up to £50 + 11 bonus spins",
+      "wagering_requirement": 10,
+      "minimum_deposit": {
+        "amount": 10,
+        "currency": "GBP"
+      },
+      "source_url": "https://bojoko.com/casino/review/mr-vegas/",
+      "warnings": []
+    },
+    {
+      "casino": "Betway",
+      "welcome_bonus": "150 bonus spins",
+      "wagering_requirement": 0,
+      "minimum_deposit": {
+        "amount": 10,
+        "currency": "GBP"
+      },
+      "source_url": "https://bojoko.com/casino/review/betway/",
+      "warnings": []
+    }
+  ],
+  "errors": []
+}

@@ -63,7 +63,7 @@ Input classes the spec implies but doesn't spell out, most likely to bite first.
     - `CasinoBonus(casino, welcome_bonus, wagering_requirement, minimum_deposit, source_url, warnings)`, `CasinoError(casino, source_url, error)`, `BonusReport(generated_at, source, model, casinos, errors)`
   - `tests.fakes`: `FIXTURES: Path`, `FakeResponse`, `FakeSession`, `FakeGeminiClient`, `FakeFetcher`
 
-- [ ] **Step 1: Create the venv and the static project files**
+- [x] **Step 1: Create the venv and the static project files**
 
 ```bash
 python3 -m venv .venv
@@ -108,7 +108,7 @@ testpaths = tests
 Run: `pip install -r requirements.txt`
 Expected: installs without errors.
 
-- [ ] **Step 2: Write `scraper/config.py`**
+- [x] **Step 2: Write `scraper/config.py`**
 
 ```python
 """Static configuration. Only the Gemini model can be overridden from the environment."""
@@ -136,7 +136,7 @@ def gemini_model() -> str:
     return os.environ.get("GEMINI_MODEL", "").strip() or DEFAULT_GEMINI_MODEL
 ```
 
-- [ ] **Step 3: Write `tests/fakes.py`** (used by later tasks; created now so every task can import it)
+- [x] **Step 3: Write `tests/fakes.py`** (used by later tasks; created now so every task can import it)
 
 ```python
 """Test doubles for HTTP and Gemini. Tests never touch the network."""
@@ -202,7 +202,7 @@ class FakeFetcher:
         return page
 ```
 
-- [ ] **Step 4: Write the failing tests `tests/test_models.py`**
+- [x] **Step 4: Write the failing tests `tests/test_models.py`**
 
 ```python
 import json
@@ -251,12 +251,12 @@ def test_bonus_fields_require_welcome_bonus():
         BonusFields.model_validate({"wagering_requirement": 10, "minimum_deposit": None})
 ```
 
-- [ ] **Step 5: Run the tests and confirm they fail**
+- [x] **Step 5: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_models.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.models'`
 
-- [ ] **Step 6: Write `scraper/models.py`**
+- [x] **Step 6: Write `scraper/models.py`**
 
 ```python
 """Data shapes shared by the LLM output, the JSON file and the page."""
@@ -340,12 +340,12 @@ class BonusReport(BaseModel):
 
 Note: `CasinoBonus` lists its fields explicitly instead of subclassing `BonusFields`, so `casino` comes first in the JSON. This is a deliberate small deviation from the spec's sketch.
 
-- [ ] **Step 7: Run the tests and confirm they pass**
+- [x] **Step 7: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_models.py -v`
 Expected: 9 passed
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add requirements.txt .env.example pytest.ini scraper/__init__.py scraper/config.py scraper/models.py tests/__init__.py tests/fakes.py tests/test_models.py
@@ -368,7 +368,7 @@ git commit -m "feat: project skeleton, config and data models"
   - `load_robots(base_url: str, session) -> urllib.robotparser.RobotFileParser`
   - `is_allowed(parser: RobotFileParser, url: str) -> bool`
 
-- [ ] **Step 1: Create `tests/fixtures/robots.txt`** (bojoko's robots.txt as of 2026-10-15)
+- [x] **Step 1: Create `tests/fixtures/robots.txt`** (bojoko's robots.txt as of 2026-10-15)
 
 ```
 User-Agent: *
@@ -383,7 +383,7 @@ Disallow: /api/*/ajax-load/toplist-first-item-footer/
 Sitemap: https://bojoko.com/sitemap.xml
 ```
 
-- [ ] **Step 2: Write the failing tests `tests/test_robots.py`**
+- [x] **Step 2: Write the failing tests `tests/test_robots.py`**
 
 ```python
 import pytest
@@ -428,12 +428,12 @@ def test_network_error_raises():
         load_robots("https://bojoko.com", session)
 ```
 
-- [ ] **Step 3: Run the tests and confirm they fail**
+- [x] **Step 3: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_robots.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.robots'`
 
-- [ ] **Step 4: Write `scraper/robots.py`**
+- [x] **Step 4: Write `scraper/robots.py`**
 
 ```python
 """robots.txt handling.
@@ -479,12 +479,12 @@ def is_allowed(parser: RobotFileParser, url: str) -> bool:
     return parser.can_fetch(config.USER_AGENT, url)
 ```
 
-- [ ] **Step 5: Run the tests and confirm they pass**
+- [x] **Step 5: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_robots.py -v`
 Expected: 7 passed
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add scraper/robots.py tests/fixtures/robots.txt tests/test_robots.py
@@ -507,7 +507,7 @@ git commit -m "feat: robots.txt loading with our own user-agent"
 
 Note: the spec sketched a `fetch_html(url, rp, session)` function. A small class replaces it because "delay between requests, not before the first" needs state. The method returns raw **bytes** so BeautifulSoup can read the page's own charset declaration, which avoids `requests` mis-guessing the encoding and turning `£` into `Â£`.
 
-- [ ] **Step 1: Write the failing tests `tests/test_fetch.py`**
+- [x] **Step 1: Write the failing tests `tests/test_fetch.py`**
 
 ```python
 from urllib.robotparser import RobotFileParser
@@ -585,12 +585,12 @@ def test_sleeps_between_requests_but_not_before_the_first():
     assert sleeps == [1.5]
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_fetch.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.fetch'`
 
-- [ ] **Step 3: Write `scraper/fetch.py`**
+- [x] **Step 3: Write `scraper/fetch.py`**
 
 ```python
 """Polite HTTP fetching: robots check first, honest user-agent, a delay, no retries.
@@ -649,12 +649,12 @@ class Fetcher:
         return response.content
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_fetch.py -v`
 Expected: 11 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scraper/fetch.py tests/test_fetch.py
@@ -676,7 +676,7 @@ git commit -m "feat: polite fetcher that respects robots.txt and blocks"
   - `class BonusCardNotFound(Exception)`
   - `parse_bonus(html: bytes | str, slug: str, source_url: str) -> BonusSnippet`
 
-- [ ] **Step 1: Capture the three review pages with our own fetcher** (the only network use in this task; it goes through the robots check and the delay)
+- [x] **Step 1: Capture the three review pages with our own fetcher** (the only network use in this task; it goes through the robots check and the delay)
 
 ```bash
 python - <<'EOF'
@@ -696,7 +696,7 @@ EOF
 
 Expected: three lines, each over 100000 bytes. If this raises `BlockedError` or `DisallowedByRobots`, STOP and report back. Don't try to work around it.
 
-- [ ] **Step 2: Create `tests/fixtures/no-card.html`.** The `<style>` contains the class names on purpose, to prove the parser ignores them:
+- [x] **Step 2: Create `tests/fixtures/no-card.html`.** The `<style>` contains the class names on purpose, to prove the parser ignores them:
 
 ```html
 <!doctype html>
@@ -705,7 +705,7 @@ Expected: three lines, each over 100000 bytes. If this raises `BlockedError` or 
 </head><body><h1>Some Casino Review</h1><p>No offer right now.</p></body></html>
 ```
 
-- [ ] **Step 3: Write the failing tests `tests/test_parse.py`**
+- [x] **Step 3: Write the failing tests `tests/test_parse.py`**
 
 ```python
 import pytest
@@ -788,12 +788,12 @@ def test_missing_terms_footer_raises():
 
 If a live fixture's wording no longer matches a phrase above (bojoko changed the offer since 2026-10-15), update the phrase to the text actually in the fixture and mention it in your hand-back report. Do NOT change the parser to make a stale phrase pass.
 
-- [ ] **Step 4: Run the tests and confirm they fail**
+- [x] **Step 4: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_parse.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.parse'`
 
-- [ ] **Step 5: Write `scraper/parse.py`**
+- [x] **Step 5: Write `scraper/parse.py`**
 
 ```python
 """Isolate the welcome-bonus card from a bojoko review page.
@@ -844,12 +844,12 @@ def parse_bonus(html: bytes | str, slug: str, source_url: str) -> BonusSnippet:
     )
 ```
 
-- [ ] **Step 6: Run the tests and confirm they pass**
+- [x] **Step 6: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_parse.py -v`
 Expected: 8 passed
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scraper/parse.py tests/test_parse.py tests/fixtures/
@@ -871,7 +871,7 @@ git commit -m "feat: parse bonus card and T&Cs from bojoko review pages"
   - `SYSTEM_PROMPT: str`, `build_prompt(snippet: BonusSnippet) -> str`
   - `extract_fields(snippet: BonusSnippet, client, model: str) -> BonusFields`. `client` is a `genai.Client` or a fake with `.models.generate_content(model=, contents=, config=)`.
 
-- [ ] **Step 1: Write the failing tests `tests/test_extract.py`**
+- [x] **Step 1: Write the failing tests `tests/test_extract.py`**
 
 ```python
 import pytest
@@ -944,12 +944,12 @@ def test_sdk_error_raises_extraction_error():
         extract_fields(SNIPPET, FakeGeminiClient(error=RuntimeError("quota exceeded")), "test-model")
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_extract.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.extract'`
 
-- [ ] **Step 3: Write `scraper/extract.py`**
+- [x] **Step 3: Write `scraper/extract.py`**
 
 ```python
 """Turn a bonus snippet's free-text terms into structured fields with Gemini."""
@@ -1000,12 +1000,12 @@ def extract_fields(snippet: BonusSnippet, client, model: str) -> BonusFields:
         raise ExtractionError(f"Gemini returned invalid data: {exc}") from exc
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_extract.py -v`
 Expected: 9 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scraper/extract.py tests/test_extract.py
@@ -1024,7 +1024,7 @@ git commit -m "feat: extract structured bonus fields with Gemini"
 - Consumes: `BonusFields`, `BonusSnippet`, `CURRENCY_SYMBOLS`, `format_number`
 - Produces: `verify(fields: BonusFields, snippet: BonusSnippet) -> list[str]` (human-readable warnings; empty means OK)
 
-- [ ] **Step 1: Write the failing tests `tests/test_verify.py`**
+- [x] **Step 1: Write the failing tests `tests/test_verify.py`**
 
 ```python
 import pytest
@@ -1108,12 +1108,12 @@ def test_unsupported_deposit_is_flagged(amount, terms):
     assert warnings == [f"minimum_deposit {amount} GBP not found in source text"]
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_verify.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.verify'`
 
-- [ ] **Step 3: Write `scraper/verify.py`**
+- [x] **Step 3: Write `scraper/verify.py`**
 
 ```python
 """Cross-check the LLM's numbers against the source text to catch invented values.
@@ -1171,12 +1171,12 @@ def verify(fields: BonusFields, snippet: BonusSnippet) -> list[str]:
     return _check_wagering(fields.wagering_requirement, haystack) + _check_deposit(fields, haystack)
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_verify.py -v`
 Expected: 21 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scraper/verify.py tests/test_verify.py
@@ -1198,7 +1198,7 @@ git commit -m "feat: cross-check LLM values against source text"
   - `render_html(report: BonusReport) -> str`
   - `render(json_path: Path, html_path: Path) -> None` (reads the JSON file, writes the HTML file)
 
-- [ ] **Step 1: Write the failing tests `tests/test_render.py`**
+- [x] **Step 1: Write the failing tests `tests/test_render.py`**
 
 ```python
 import json
@@ -1308,12 +1308,12 @@ def test_render_reads_json_file_and_writes_html(tmp_path):
     assert "10Bet" in html_path.read_text(encoding="utf-8")
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_render.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.render'`
 
-- [ ] **Step 3: Write `scraper/render.py`**
+- [x] **Step 3: Write `scraper/render.py`**
 
 ```python
 """Render docs/index.html from docs/bonuses.json: static HTML, inline CSS, no JavaScript."""
@@ -1451,12 +1451,12 @@ def render(json_path: Path, html_path: Path) -> None:
     html_path.write_text(render_html(report), encoding="utf-8")
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_render.py -v`
 Expected: 8 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scraper/render.py tests/test_render.py
@@ -1479,7 +1479,7 @@ git commit -m "feat: render phone-friendly static page from JSON"
   - `write_report(report: BonusReport, path: Path) -> None`
   - `main(argv: list[str] | None = None) -> int`. Exit codes: 0 all ok; 1 any casino failed, robots.txt unreadable, or `--render-only` without JSON; 2 no API key.
 
-- [ ] **Step 1: Write the failing tests `tests/test_main.py`**
+- [x] **Step 1: Write the failing tests `tests/test_main.py`**
 
 ```python
 import json
@@ -1599,12 +1599,12 @@ def test_render_only_without_json_exits_1(monkeypatch, tmp_path, capsys):
     assert "python -m scraper" in capsys.readouterr().err
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `python -m pytest tests/test_main.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'scraper.__main__'`
 
-- [ ] **Step 3: Write `scraper/__main__.py`**
+- [x] **Step 3: Write `scraper/__main__.py`**
 
 ```python
 """Entry point: `python -m scraper` scrapes, writes docs/bonuses.json and renders docs/index.html.
@@ -1717,17 +1717,17 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `python -m pytest tests/test_main.py -v`
 Expected: 10 passed
 
-- [ ] **Step 5: Run the full suite with no API key in the environment**
+- [x] **Step 5: Run the full suite with no API key in the environment**
 
 Run: `env -u GEMINI_API_KEY python -m pytest -q`
 Expected: 83 passed, with no network access needed (counts: models 9, robots 7, fetch 11, parse 8, extract 9, verify 21, render 8, main 10)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add scraper/__main__.py tests/test_main.py
@@ -1747,12 +1747,12 @@ git commit -m "feat: single-command entry point with exit codes"
 - Consumes: the whole package.
 - Produces: the committed outputs and README the reviewer checks.
 
-- [ ] **Step 1: Make sure `.env` has a real key.** `.env` already exists. The human fills in `GEMINI_API_KEY=` themselves. Check without printing the key: `grep -q '^GEMINI_API_KEY=.\+' .env && echo key-present || echo key-missing`. If it prints `key-missing`, stop and ask the human to add their key to `.env`; don't ask them to paste it into chat. Never commit `.env`, and never print the key.
+- [x] **Step 1: Make sure `.env` has a real key.** `.env` already exists. The human fills in `GEMINI_API_KEY=` themselves. Check without printing the key: `grep -q '^GEMINI_API_KEY=.\+' .env && echo key-present || echo key-missing`. If it prints `key-missing`, stop and ask the human to add their key to `.env`; don't ask them to paste it into chat. Never commit `.env`, and never print the key.
 
 Run: `git check-ignore .env`
 Expected: `.env` (so it is ignored)
 
-- [ ] **Step 2: Run the scraper for real**
+- [x] **Step 2: Run the scraper for real**
 
 Run: `python -m scraper; echo "exit=$?"`
 Expected: `INFO 10bet: ok`, `INFO mr-vegas: ok`, `INFO betway: ok`, a summary line, `exit=0`.
@@ -1762,7 +1762,7 @@ Expected: `INFO 10bet: ok`, `INFO mr-vegas: ok`, `INFO betway: ok`, a summary li
 - If a casino reports `blocked` or `robots.txt disallows`, STOP and report back. Don't work around it.
 - A `WARNING ... not found in source text` line doesn't fail the run. Record it in the report.
 
-- [ ] **Step 3: Check the output against the source by eye**
+- [x] **Step 3: Check the output against the source by eye**
 
 Run: `cat docs/bonuses.json`
 Expected for each casino, compared with the T&Cs text in its `tests/fixtures/<slug>.html`:
@@ -1772,9 +1772,9 @@ Expected for each casino, compared with the T&Cs text in its `tests/fixtures/<sl
 
 The live offers may have changed since 2026-10-15. What matters is that each value matches the current source text. List any value you believe is wrong in the report; don't hand-edit the JSON.
 
-- [ ] **Step 4: Check the page.** Open `docs/index.html` in a browser at full width and with the device toolbar at 320px. Expected: a table at full width, stacked labelled cards at 320px, no horizontal scrolling.
+- [x] **Step 4: Check the page.** Open `docs/index.html` in a browser at full width and with the device toolbar at 320px. Expected: a table at full width, stacked labelled cards at 320px, no horizontal scrolling.
 
-- [ ] **Step 5: Write `README.md`**
+- [x] **Step 5: Write `README.md`**
 
 ~~~~markdown
 # Casino Bonus Scraper
@@ -1909,7 +1909,7 @@ links (`/go/...`) are disallowed by robots.txt and are never requested.
 
 If Step 2 changed the default model, update the `"model"` value in the README's JSON example to match.
 
-- [ ] **Step 6: Run the full suite again, then commit**
+- [x] **Step 6: Run the full suite again, then commit**
 
 Run: `env -u GEMINI_API_KEY python -m pytest -q`
 Expected: all tests pass (83, or the same count after any Step 2 adjustment)
@@ -1920,7 +1920,7 @@ git status --short   # must NOT list .env
 git commit -m "feat: live scrape output and README"
 ```
 
-- [ ] **Step 7: Hand back to the reviewer.** Your final message must include:
+- [x] **Step 7: Hand back to the reviewer.** Your final message must include:
   1. `git log --oneline`
   2. The output of `python -m pytest -q`
   3. The full log of the live run from Step 2, including the exit code
